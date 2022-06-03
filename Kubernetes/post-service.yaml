@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: post-service
+  labels:
+    app: post-service
+    tier: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: post-service
+  template:
+    metadata:
+      labels:
+        app: post-service
+        tier: backend
+    spec:
+      containers:
+        - name: post-service
+          image: IMAGE NAME DOES NOT EXIST YET FIX LATER
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SERVER_PORT
+              value: "8080"
+            - name: DB_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: post-service-config
+                  key: db_url
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: post-service-secrets
+                  key: username
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: post-service-secrets
+                  key: password
+          livenessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 15
+          readinessProbe:
+            tcpSocket:
+              port: 80
+            initialDelaySeconds: 30
+            periodSeconds: 15
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: post-service
+  name: post-service-service
+spec:
+  ports:
+    - port: 80
+      targetPort: 8080
+  selector:
+    app: post-service

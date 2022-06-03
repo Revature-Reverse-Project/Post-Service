@@ -16,3 +16,9 @@ eureka:
       defaultZone: ${EUREKA_URI:http://localhost:8083/eureka}
 
 validationServer: ${VALIDATION:http://localhost:8084/users/validation}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

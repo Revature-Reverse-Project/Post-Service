@@ -25,14 +25,14 @@ pipeline {
         stage ('Docker Build') {
             steps {
                 script {
-                    sh "docker build -t user-service ."
+                    sh "docker build -t post-service ."
                 }
             }
         }
         stage ('Docker tag and push to Google Artifact Registry') {
             steps {
                 script {
-                    sh "docker tag user-service ${REGISTRY_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${REPOSITORY}/post-service"
+                    sh "docker tag post-service ${REGISTRY_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${REPOSITORY}/post-service"
                     sh "docker push ${REGISTRY_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${REPOSITORY}/post-service"
                 }
             }

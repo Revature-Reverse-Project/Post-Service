@@ -10,12 +10,12 @@ spring:
     password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
 
-eureka:
-  client:
-    service-url:
-      defaultZone: ${EUREKA_URI:http://localhost:8083/eureka}
+# eureka:
+#   client:
+#     service-url:
+#       defaultZone: ${EUREKA_URI:http://localhost:8083/eureka}
 
-validationServer: ${VALIDATION:http://localhost:8084/users/validation}
+# validationServer: ${VALIDATION:http://localhost:8084/users/validation}
 
 management:
   endpoints:
